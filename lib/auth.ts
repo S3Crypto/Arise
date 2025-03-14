@@ -12,8 +12,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       if (user.email) {
-        // Create user in Firebase if they don't exist
-        await createUser(user.email, user.name || "")
+        try {
+          // Create user in Firebase if they don't exist
+          await createUser(user.email, user.name || "")
+        } catch (error) {
+          console.error("Error creating user in Firebase:", error)
+          // Don't block sign-in if Firebase fails
+        }
       }
       return true
     },

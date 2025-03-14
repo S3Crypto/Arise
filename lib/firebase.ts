@@ -3,16 +3,44 @@ import { getApps } from "firebase-admin/app"
 
 // Initialize Firebase Admin if it hasn't been initialized yet
 if (!getApps().length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-    }),
-  })
+  try {
+    // Check if all required environment variables are present
+    if (!process.env.FIREBASE_PROJECT_ID || !process.env.FIREBASE_CLIENT_EMAIL || !process.env.FIREBASE_PRIVATE_KEY) {
+      console.error("Missing Firebase credentials in environment variables")
+      throw new Error("Firebase credentials not properly configured")
+    }
+
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      }),
+    })
+    console.log("Firebase Admin initialized successfully")
+  } catch (error) {
+    console.error("Error initializing Firebase Admin:", error)
+    // Create a more graceful fallback for development/testing
+    console.warn("Using in-memory fallback for Firebase (data will not persist)")
+  }
 }
 
-const db = admin.firestore()
+// Create a mock/fallback implementation for development or when Firebase isn't available
+const mockDb = {
+  collection: (name) => ({
+    doc: (id) => ({
+      get: async () => ({
+        exists: false,
+        data: () => null,
+      }),
+      set: async (data) => console.log(`Mock set ${name}/${id}:`, data),
+      update: async (data) => console.log(`Mock update ${name}/${id}:`, data),
+    }),
+  }),
+}
+
+// Use the real Firestore if available, otherwise use the mock
+const db = admin.apps.length ? admin.firestore() : mockDb
 
 // Default stats for new users
 const defaultStats = {
