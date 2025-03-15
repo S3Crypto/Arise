@@ -36,7 +36,7 @@ export function DailyQuestModal({
 
   const dailyQuest = quests.find((q) => q.id === "daily") || {
     id: "daily",
-    title: "TRAIN TO BECOME A FORMIDABLE COMBATANT",
+    title: "STRENGTH TRAINING HAS ARRIVED",
     tasks: [],
     isCompleted: false,
   }
@@ -132,123 +132,110 @@ export function DailyQuestModal({
               variants={modalVariants}
               className="relative w-full max-w-md"
             >
-              <div className="relative bg-gradient-to-b from-[#0a2434] to-[#051926] rounded-lg border-4 border-[#05b9ca]/30 overflow-hidden">
-                {/* Ornamental corners */}
-                <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#05b9ca] rounded-tl-lg"></div>
-                <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-[#05b9ca] rounded-tr-lg"></div>
-                <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-[#05b9ca] rounded-bl-lg"></div>
-                <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#05b9ca] rounded-br-lg"></div>
+              {/* Animated scan lines */}
+              <div
+                className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,20,40,.5)_50%)] bg-[length:100%_4px] pointer-events-none"
+                style={{ animation: "scan 8s linear infinite" }}
+              />
 
-                {/* Header with ornamental design */}
-                <div className="pt-6 pb-4 px-6 text-center">
-                  <div className="flex justify-center items-center mb-2">
-                    <AlertCircle className="text-[#05b9ca] mr-2" size={24} />
-                    <h2 className="text-2xl font-bold text-white tracking-wider">QUEST INFO</h2>
+              {/* Outer frame decoration */}
+              <div className="absolute -top-4 -left-2 -right-2 h-12 bg-blue-400/10"></div>
+              <div className="absolute -bottom-4 -left-2 -right-2 h-12 bg-blue-400/10"></div>
+              <div className="absolute -left-4 -top-2 -bottom-2 w-12 bg-blue-400/10"></div>
+              <div className="absolute -right-4 -top-2 -bottom-2 w-12 bg-blue-400/10"></div>
+
+              <div className="relative bg-[#000a14]/90 backdrop-blur-sm rounded border-2 border-blue-400/30 overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                {/* Header section */}
+                <div className="pt-6 pb-2 px-6 text-center border-b border-blue-400/30">
+                  <div className="flex justify-center items-center">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-400/50 bg-transparent">
+                      <AlertCircle className="text-blue-400 h-5 w-5" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-blue-400 tracking-wider ml-2">QUEST INFO</h2>
                   </div>
                   <Button
                     onClick={() => setIsOpen(false)}
-                    className="absolute top-2 right-2 h-8 w-8 rounded-full bg-transparent hover:bg-[#05b9ca]/20 p-0"
+                    className="absolute top-2 right-2 h-8 w-8 rounded-full bg-transparent hover:bg-blue-400/20 p-0"
                   >
-                    <X className="h-4 w-4 text-[#05b9ca]" />
+                    <X className="h-4 w-4 text-blue-400" />
                   </Button>
 
-                  <h3 className="text-xl text-white text-center mt-4 mb-6 font-bold tracking-wider">
-                    DAILY QUEST - {dailyQuest.title}
-                  </h3>
+                  <div className="text-white text-center mt-4 mb-2">
+                    [Daily Quest: {dailyQuest.title}]
+                  </div>
+                </div>
 
-                  <div className="text-[#00ff4c] text-xl font-bold mb-4">GOALS</div>
+                {/* Goal header */}
+                <div className="px-8 py-2 text-center">
+                  <div className="text-blue-400 text-xl font-bold border-b border-blue-400/30 inline-block px-8 pb-1">
+                    GOAL
+                  </div>
                 </div>
 
                 {/* Quest tasks */}
                 <div className="px-8 py-4">
                   {dailyQuest.tasks.map((task) => {
-                    const isTaskComplete = task.current >= task.goal
-                    const isTaskInProgress = completingTask === task.id
+                    const isTaskComplete = task.current >= task.goal;
 
                     return (
-                      <div key={task.id} className="mb-6 relative">
-                        <div className="flex items-center mb-2">
-                          <div className="text-gray-200 flex-1 text-left">-{task.name.toUpperCase()}</div>
+                      <div key={task.id} className="mb-4 relative flex items-center justify-between">
+                        <div className="text-gray-200 text-left">{task.name}</div>
+                        <div className="flex items-center space-x-3">
                           <div className="text-white whitespace-nowrap">
-                            [{task.current}/{task.goal}
-                            {task.unit}]
+                            [{task.current}/{task.goal}{task.unit}]
                           </div>
-                        </div>
-
-                        <div className="flex items-center">
-                          <div className="flex-1 mr-3">
-                            <Progress
-                              value={(task.current / task.goal) * 100}
-                              className="h-3 bg-gray-700 relative overflow-hidden"
-                            >
-                              {isTaskInProgress && (
-                                <motion.div
-                                  className="absolute inset-0 bg-[#05b9ca]/30"
-                                  animate={{ x: ["0%", "100%"] }}
-                                  transition={{ duration: 0.8, repeat: Number.POSITIVE_INFINITY }}
-                                />
-                              )}
-                            </Progress>
-                          </div>
-
-                          <div className="flex space-x-2">
-                            <Button
-                              onClick={() => handleProgressUpdate(task.id, Math.min(task.current + 1, task.goal))}
-                              className="h-8 px-2 bg-[#05b9ca] hover:bg-[#05b9ca]/80 text-xs rounded"
-                              disabled={isTaskComplete || isTaskInProgress}
-                            >
-                              +1
-                            </Button>
-
-                            {!isTaskComplete ? (
-                              <Button
-                                onClick={() => handleCompleteTask(task.id)}
-                                className="h-8 px-2 bg-green-600 hover:bg-green-700 text-xs rounded flex items-center"
-                                disabled={isTaskComplete || isTaskInProgress}
-                              >
-                                <Check className="h-4 w-4 mr-1" />
-                                Complete
-                              </Button>
-                            ) : (
-                              <div className="h-8 px-3 bg-green-600/20 text-green-400 text-xs rounded flex items-center">
-                                <Check className="h-4 w-4 mr-1" />
-                                Completed
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {isTaskInProgress && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="absolute -right-2 -top-2 text-xs bg-[#05b9ca] text-white px-2 py-1 rounded"
+                          {/* Checkbox that completes the task */}
+                          <button
+                            onClick={() => handleCompleteTask(task.id)}
+                            disabled={isTaskComplete || completingTask === task.id}
+                            className={`w-6 h-6 flex items-center justify-center rounded border ${isTaskComplete
+                              ? 'bg-green-500/20 border-green-500'
+                              : 'bg-transparent border-blue-400/50 hover:bg-blue-400/20'
+                              }`}
                           >
-                            Updating...
-                          </motion.div>
-                        )}
+                            {isTaskComplete && <Check className="h-4 w-4 text-green-500" />}
+                          </button>
+                        </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
 
                 {/* Warning text */}
                 <div className="px-8 py-4 text-center">
-                  <p className="text-red-500 font-bold">CAUTION! - IF THE DAILY QUEST</p>
-                  <p className="text-white font-bold">REMAINS INCOMPLETE, PENALTIES</p>
-                  <p className="text-white font-bold">WILL BE GIVEN ACCORDINGLY.</p>
+                  <p className="text-white text-sm">WARNING: Failure to complete</p>
+                  <p className="text-white text-sm">the daily quest will result in</p>
+                  <p className="text-red-500 text-sm font-bold">an appropriate penalty.</p>
                 </div>
 
-                {/* Timer icon */}
-                <div className="flex justify-center pb-8">
-                  <Clock className="h-12 w-12 text-[#05b9ca]" />
+                {/* Confirmation button */}
+                <div className="flex justify-center py-4 mb-2">
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="w-12 h-12 border border-green-500/50 rounded flex items-center justify-center hover:bg-green-500/20"
+                  >
+                    <Check className="h-6 w-6 text-green-500" />
+                  </button>
                 </div>
+
+                {/* Circuit pattern overlay for decoration */}
+                <div className="absolute inset-0 pointer-events-none opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwaDUwdjUwSDBWMHptMTAwIDBoNTB2NTBoLTUwVjB6bTUwIDUwaDUwdjUwaC01MFY1MHpNNTAgMTAwaDUwdjUwSDUwdi01MHptMTAwIDBoNTB2NTBoLTUwdi01MHoiIGZpbGw9IiMwMGZmZmYiIGZpbGwtb3BhY2l0eT0iLjEiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==')]"></div>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx>{`
+        @keyframes scan {
+          0% {
+            background-position: 0 0;
+          }
+          100% {
+            background-position: 0 100%;
+          }
+        }
+      `}</style>
     </>
   )
 }
-
