@@ -7,9 +7,6 @@ import { Progress } from "@/components/ui/progress"
 import { updateQuestProgress } from "@/lib/actions"
 import { motion, AnimatePresence } from "framer-motion"
 import { useToast } from "@/components/ui/use-toast"
-import Particles from "react-tsparticles"
-import { loadFull } from "tsparticles"
-import type { Engine } from "tsparticles-engine"
 
 type QuestTask = {
   id: string
@@ -35,7 +32,6 @@ export function DailyQuestModal({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [completingTask, setCompletingTask] = useState<string | null>(null)
-  const [showConfetti, setShowConfetti] = useState(false)
   const { toast } = useToast()
 
   const dailyQuest = quests.find((q) => q.id === "daily") || {
@@ -46,10 +42,6 @@ export function DailyQuestModal({
   }
 
   const isQuestIncomplete = dailyQuest.tasks.length > 0 && !dailyQuest.isCompleted
-
-  const particlesInit = async (engine: Engine) => {
-    await loadFull(engine)
-  }
 
   const handleProgressUpdate = async (taskId: string, newProgress: number) => {
     try {
@@ -63,9 +55,6 @@ export function DailyQuestModal({
       // Check if this update completes the task
       const task = dailyQuest.tasks.find((t) => t.id === taskId)
       if (task && newProgress >= task.goal) {
-        setShowConfetti(true)
-        setTimeout(() => setShowConfetti(false), 3000)
-
         toast({
           title: "Task Completed!",
           description: `You've completed: ${task.name}`,
@@ -96,43 +85,6 @@ export function DailyQuestModal({
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
-  }
-
-  const particlesOptions = {
-    background: {
-      opacity: 0,
-    },
-    particles: {
-      number: {
-        value: 40,
-        density: {
-          enable: true,
-          value_area: 800,
-        },
-      },
-      color: {
-        value: "#05b9ca",
-      },
-      shape: {
-        type: "circle",
-      },
-      opacity: {
-        value: 0.5,
-        random: true,
-      },
-      size: {
-        value: 3,
-        random: true,
-      },
-      move: {
-        enable: true,
-        speed: 1,
-        direction: "none",
-        random: true,
-        straight: false,
-        out_mode: "out",
-      },
-    },
   }
 
   return (
@@ -174,8 +126,6 @@ export function DailyQuestModal({
             exit={{ opacity: 0 }}
             className="fixed inset-0 flex items-center justify-center bg-black/80 z-50"
           >
-            <Particles id="tsparticles" init={particlesInit} options={particlesOptions} className="absolute inset-0" />
-
             <motion.div
               initial="hidden"
               animate="visible"
@@ -193,7 +143,7 @@ export function DailyQuestModal({
                 <div className="pt-6 pb-4 px-6 text-center">
                   <div className="flex justify-center items-center mb-2">
                     <AlertCircle className="text-[#05b9ca] mr-2" size={24} />
-                    <h2 className="text-2xl font-bold text-white tracking-wider">ARISE QUEST</h2>
+                    <h2 className="text-2xl font-bold text-white tracking-wider">QUEST INFO</h2>
                   </div>
                   <Button
                     onClick={() => setIsOpen(false)}
@@ -203,7 +153,7 @@ export function DailyQuestModal({
                   </Button>
 
                   <h3 className="text-xl text-white text-center mt-4 mb-6 font-bold tracking-wider">
-                    {dailyQuest.title}
+                    DAILY QUEST - {dailyQuest.title}
                   </h3>
 
                   <div className="text-[#00ff4c] text-xl font-bold mb-4">GOALS</div>
@@ -295,42 +245,6 @@ export function DailyQuestModal({
                 </div>
               </div>
             </motion.div>
-
-            {showConfetti && (
-              <div className="fixed inset-0 pointer-events-none">
-                <Particles
-                  id="confetti-particles"
-                  init={particlesInit}
-                  options={{
-                    particles: {
-                      number: {
-                        value: 100,
-                      },
-                      color: {
-                        value: ["#05b9ca", "#00ff4c", "#ffffff", "#ffcc00"],
-                      },
-                      shape: {
-                        type: "circle",
-                      },
-                      size: {
-                        value: 6,
-                        random: true,
-                      },
-                      move: {
-                        enable: true,
-                        speed: 10,
-                        direction: "bottom",
-                        straight: false,
-                      },
-                      opacity: {
-                        value: 0.7,
-                        random: true,
-                      },
-                    },
-                  }}
-                />
-              </div>
-            )}
           </motion.div>
         )}
       </AnimatePresence>

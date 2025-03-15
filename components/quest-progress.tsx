@@ -27,7 +27,7 @@ export function QuestProgress({ quests }: { quests: Quest[] }) {
     return (
       <Card className="bg-gradient-to-b from-[#0a2434] to-[#051926] border-2 border-[#05b9ca]/30">
         <CardHeader>
-          <CardTitle className="text-white">Arise Quest Progress</CardTitle>
+          <CardTitle className="text-white">Daily Quest Progress</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-gray-400 text-center py-4">No active quests. Set up your daily quests in the settings.</p>
@@ -45,7 +45,7 @@ export function QuestProgress({ quests }: { quests: Quest[] }) {
       <CardHeader>
         <CardTitle className="text-white flex items-center">
           <Trophy className="w-5 h-5 mr-2 text-[#05b9ca]" />
-          Arise Quest Progress
+          Daily Quest Progress
         </CardTitle>
       </CardHeader>
 

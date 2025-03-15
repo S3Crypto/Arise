@@ -9,7 +9,8 @@ export function DashboardHeader({ user }: { user: User }) {
     <header className="border-b border-[#05b9ca]/20 bg-[#041420]/80 backdrop-blur-md sticky top-0 z-10">
       <div className="container flex h-16 items-center px-4">
         <Link href="/dashboard" className="flex items-center">
-          <span className="text-xl font-bold text-[#05b9ca]">Arise</span>
+          <span className="text-xl font-bold text-[#05b9ca]">Daily</span>
+          <span className="text-xl font-bold text-white">Quest</span>
         </Link>
 
         <nav className="ml-auto flex items-center space-x-4">

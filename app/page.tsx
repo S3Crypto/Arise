@@ -70,6 +70,18 @@ export default async function Home() {
             </div>
           </div>
         </motion.div>
+      <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16 text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+          <span className="text-cyan-400">Daily</span> Quest System
+        </h1>
+        <p className="text-lg text-gray-400 max-w-2xl">
+          Level up your life with daily quests inspired by Solo Leveling. Complete tasks, gain stats, and become the
+          strongest hunter.
+        <div className="flex flex-col sm:flex-row gap-4 mt-6">
+          <Link href="/api/auth/signin">
+            <Button className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-6 text-lg">Sign In with Google</Button>
+          </Link>
+        </div>
       </div>
     </main>
   )
