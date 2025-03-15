@@ -1,6 +1,10 @@
 import admin from "firebase-admin"
 import { getApps } from "firebase-admin/app"
 
+// Add a comment to mark this as a server-only file
+// This file should only be imported in server components or API routes
+// @ts-ignore - This module is meant for server-side only
+
 // Create a mock/fallback implementation for development or when Firebase isn't available
 const mockDb = {
   collection: (name: string) => ({

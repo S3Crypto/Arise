@@ -1,6 +1,10 @@
 import type { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { createUser } from "@/lib/firebase"
+import { serverOnly } from "./server-only"
+
+// Mark this module as server-only
+serverOnly
 
 export const authOptions: NextAuthOptions = {
   providers: [
