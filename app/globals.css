@@ -34,9 +34,6 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
-
-    --chart-1: 187 100% 42%;
-    --chart-2: 217 91% 60%;
   }
 
   .dark {
@@ -78,5 +75,24 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom styles for the cyberpunk aesthetic */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+}
+
+.border-glow {
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
 }
 
