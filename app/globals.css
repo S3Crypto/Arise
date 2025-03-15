@@ -53,6 +53,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -67,3 +68,17 @@
   box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
 }
 
+/* Scan line animation */
+@keyframes scan {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 -400px;
+  }
+}
+
+.animate-scan {
+  animation: scan 5s linear infinite;
+}

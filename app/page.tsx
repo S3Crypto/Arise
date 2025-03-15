@@ -16,8 +16,7 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#000913] overflow-hidden">
       {/* Animated background with scan lines */}
       <div
-        className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,20,40,.5)_50%)] bg-[length:100%_4px] pointer-events-none"
-        style={{ animation: "scan 5s linear infinite" }}
+        className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,20,40,.5)_50%)] bg-[length:100%_4px] pointer-events-none animate-scan"
       />
 
       <motion.div
@@ -72,19 +71,6 @@ export default async function Home() {
           </div>
         </div>
       </motion.div>
-
-      {/* Add scan lines animation */}
-      <style jsx global>{`
-        @keyframes scan {
-          from {
-            background-position: 0 0;
-          }
-          to {
-            background-position: 0 -400px;
-          }
-        }
-      `}</style>
     </main>
   )
 }
-
