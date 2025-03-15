@@ -25,6 +25,11 @@ export const authOptions: NextAuthOptions = {
     async session({ session }) {
       return session
     },
-  }
+  },
+  pages: {
+    signIn: "/",
+    error: "/",
+  },
+  debug: process.env.NODE_ENV === "development",
 }
 

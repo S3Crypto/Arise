@@ -4,7 +4,12 @@ import { revalidatePath } from "next/cache"
 
 export async function updateQuestProgress(userEmail: string, questId: string, taskId: string, progress: number) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/quests/complete`, {
+    if (!process.env.NEXT_PUBLIC_APP_URL) {
+      console.warn("NEXT_PUBLIC_APP_URL is not defined, using relative URL")
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || ""
+    const response = await fetch(`${baseUrl}/api/quests/complete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,6 +22,8 @@ export async function updateQuestProgress(userEmail: string, questId: string, ta
     })
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      console.error("Failed to update progress:", errorData)
       throw new Error("Failed to update progress")
     }
 
@@ -24,13 +31,18 @@ export async function updateQuestProgress(userEmail: string, questId: string, ta
     return true
   } catch (error) {
     console.error("Error updating quest progress:", error)
-    throw error
+    return false
   }
 }
 
 export async function saveCustomQuests(userEmail: string, dailyQuest: any) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/quests/update`, {
+    if (!process.env.NEXT_PUBLIC_APP_URL) {
+      console.warn("NEXT_PUBLIC_APP_URL is not defined, using relative URL")
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || ""
+    const response = await fetch(`${baseUrl}/api/quests/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,6 +53,8 @@ export async function saveCustomQuests(userEmail: string, dailyQuest: any) {
     })
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      console.error("Failed to save custom quests:", errorData)
       throw new Error("Failed to save custom quests")
     }
 
@@ -49,7 +63,7 @@ export async function saveCustomQuests(userEmail: string, dailyQuest: any) {
     return true
   } catch (error) {
     console.error("Error saving custom quests:", error)
-    throw error
+    return false
   }
 }
 
