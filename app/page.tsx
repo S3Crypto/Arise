@@ -5,9 +5,6 @@ import { authOptions } from "@/lib/auth"
 import { motion } from "framer-motion"
 import { AlertCircle } from "lucide-react"
 
-// Import the missing Button component
-import { Button } from "@/components/ui/button"
-
 export default async function Home() {
   const session = await getServerSession(authOptions)
 
@@ -16,77 +13,78 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[#020617] overflow-hidden">
-      {/* Background circuit patterns */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[#000913] overflow-hidden">
+      {/* Animated background with scan lines */}
+      <div
+        className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,20,40,.5)_50%)] bg-[length:100%_4px] pointer-events-none"
+        style={{ animation: "scan 5s linear infinite" }}
+      />
 
-      <div className="container relative flex flex-col items-center justify-center gap-6 px-4 py-16">
-        {/* Notification Box */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="relative w-full max-w-lg"
-        >
-          {/* Top Circuit Line */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="absolute -top-2 left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_0_15px_0_rgba(34,211,238,0.5)] before:absolute before:left-0 before:top-0 before:h-[2px] before:w-20 before:bg-cyan-500 before:blur-sm after:absolute after:right-0 after:top-0 after:h-[2px] after:w-20 after:bg-cyan-500 after:blur-sm"
-          />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="relative w-full max-w-2xl mx-auto px-4"
+      >
+        {/* Holographic container */}
+        <div className="relative rounded-lg border border-cyan-500/30 bg-black/40 backdrop-blur-sm overflow-hidden">
+          {/* Glowing border effect */}
+          <div className="absolute inset-0 rounded-lg border border-cyan-400/20">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-cyan-500/5 to-cyan-500/10" />
+          </div>
 
-          {/* Bottom Circuit Line */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="absolute -bottom-2 left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_0_15px_0_rgba(34,211,238,0.5)] before:absolute before:left-0 before:top-0 before:h-[2px] before:w-20 before:bg-cyan-500 before:blur-sm after:absolute after:right-0 after:top-0 after:h-[2px] after:w-20 after:bg-cyan-500 after:blur-sm"
-          />
-
-          <div className="relative rounded-lg border border-cyan-500/20 bg-black/40 p-8 shadow-[0_0_25px_0_rgba(34,211,238,0.1)] backdrop-blur-xl">
+          {/* Content container */}
+          <div className="relative p-8">
             {/* Header */}
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-500/50 text-cyan-400">
-                <AlertCircle className="h-5 w-5" />
+            <div className="flex items-center gap-4 mb-12">
+              <div className="flex h-10 w-10 items-center justify-center rounded-md border border-cyan-500/50 bg-cyan-500/10">
+                <AlertCircle className="h-6 w-6 text-cyan-400" />
               </div>
-              <h2 className="text-xl font-bold tracking-wider text-cyan-500">NOTIFICATION</h2>
+              <h2 className="text-2xl font-bold tracking-[0.2em] text-cyan-400 animate-pulse">NOTIFICATION</h2>
             </div>
 
-            {/* Content */}
-            <div className="space-y-6 text-center">
-              <p className="text-lg text-cyan-100">
-                You have acquired the qualifications to be a <span className="font-bold text-cyan-400">Player</span>.{" "}
-                <span className="block mt-2">Will you accept?</span>
+            {/* Message */}
+            <div className="space-y-8 text-center px-4">
+              <p className="text-xl text-cyan-100/90 tracking-wide leading-relaxed">
+                You have acquired the qualifications
+                <br />
+                to be a{" "}
+                <span className="font-bold text-cyan-400 relative inline-block">
+                  Player
+                  <span className="absolute inset-0 blur-sm bg-cyan-400/30 animate-pulse" />
+                </span>
+                .<span className="block mt-2">Will you accept?</span>
               </p>
 
               {/* Connect Button */}
-              <Link href="/api/auth/signin" className="group relative block">
-                <div className="absolute -inset-0.5 rounded bg-gradient-to-r from-cyan-500 to-blue-500 opacity-70 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200" />
-                <div className="relative flex items-center justify-center rounded-sm bg-black px-12 py-3 text-lg font-semibold text-cyan-400 transition duration-200 hover:text-cyan-300">
-                  <span className="relative z-20">CONNECT</span>
-                  <div className="absolute inset-0 z-10 rounded-sm bg-black/50 backdrop-blur" />
+              <Link href="/api/auth/signin" className="group relative inline-block mt-8">
+                <motion.div
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: [0.5, 0.8, 0.5] }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                  className="absolute -inset-1 rounded bg-gradient-to-r from-cyan-600 via-cyan-400 to-cyan-600 blur-md"
+                />
+                <div className="relative rounded bg-black/80 px-12 py-4 text-lg font-semibold text-cyan-400 transition-colors group-hover:text-cyan-300 border border-cyan-500/50">
+                  CONNECT
                 </div>
               </Link>
             </div>
           </div>
-        </motion.div>
-
-        <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            <span className="text-cyan-400">Daily</span> Quest System
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl">
-            Level up your life with daily quests inspired by Solo Leveling. Complete tasks, gain stats, and become the
-            strongest hunter.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-6">
-            <Link href="/api/auth/signin">
-              <Button className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-6 text-lg">Sign In with Google</Button>
-            </Link>
-          </div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Add scan lines animation */}
+      <style jsx global>{`
+        @keyframes scan {
+          from {
+            background-position: 0 0;
+          }
+          to {
+            background-position: 0 -400px;
+          }
+        }
+      `}</style>
     </main>
   )
 }
+
