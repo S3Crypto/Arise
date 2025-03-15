@@ -63,7 +63,10 @@
     "@emotion/is-prop-valid": "latest",
     "next-auth": "latest",
     "framer-motion": "latest",
-    "firebase-admin": "latest"
+    "firebase-admin": "latest",
+    "react-tsparticles": "latest",
+    "tsparticles": "latest",
+    "tsparticles-engine": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",

@@ -7,8 +7,8 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Daily Quest System",
-  description: "Solo Leveling inspired daily quest system",
+  title: "Arise",
+  description: "Solo Leveling inspired personal growth system",
     generator: 'v0.dev'
 }
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="quest-theme">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="arise-theme">
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>

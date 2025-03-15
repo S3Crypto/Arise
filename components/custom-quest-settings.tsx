@@ -101,7 +101,7 @@ export function CustomQuestSettings({
   return (
     <Card className="bg-gradient-to-b from-[#0a2434] to-[#051926] border-2 border-[#05b9ca]/30">
       <CardHeader>
-        <CardTitle className="text-white">Custom Daily Quest</CardTitle>
+        <CardTitle className="text-white">Arise Custom Quest</CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-6">

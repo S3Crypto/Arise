@@ -15,7 +15,7 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black">
       <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16 text-center">
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-          <span className="text-cyan-400">Daily</span> Quest System
+          <span className="text-cyan-400">Arise</span>
         </h1>
         <p className="text-lg text-gray-400 max-w-2xl">
           Level up your life with daily quests inspired by Solo Leveling. Complete tasks, gain stats, and become the
